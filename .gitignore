@@ -17,6 +17,7 @@ frontend/node_modules/
 # env & secrets
 .env
 .env.*
+server.env
 !.env.example
 
 # Prisma / SQLite local
