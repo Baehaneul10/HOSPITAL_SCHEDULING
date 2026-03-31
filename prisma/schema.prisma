@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// SQLite: enums as String + app validation
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         String   @default("THERAPIST") // ADMIN | THERAPIST
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Patient {
+  id                 String   @id @default(cuid())
+  chartNumber        String   @unique
+  name               String
+  visitType          String   @default("INPATIENT") // INPATIENT | OUTPATIENT
+  wardOrNote         String?
+  admissionDate      DateTime?
+  treatmentStartDate DateTime?
+  dischargeDate      DateTime?
+  treatmentEndDate   DateTime?
+  treatmentInfo      String?
+  estimatedAmount    Float?
+  notes              String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  appointments       Appointment[]
+}
+
+model Appointment {
+  id                String   @id @default(cuid())
+  patientId         String
+  patient           Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  treatmentDateTime DateTime
+  treatmentName     String   @default("역박동")
+  treatmentOption   String?  // K | J | S
+  treatmentStatus   String   @default("SCHEDULED") // SCHEDULED | COMPLETED | CANCELLED
+  treatmentDetail   String?
+  referenceNotes    String?
+  remarks           String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([treatmentDateTime])
+}

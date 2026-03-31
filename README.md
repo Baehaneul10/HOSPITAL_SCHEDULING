@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# hospital-scheduling
 
-## Getting Started
+무등산생태요양병원 치료 스케줄·환자명부용 웹앱입니다. **Vue 3 + Vite** 프론트엔드, **Express + Prisma** API, 로컬 기본 DB는 SQLite입니다.
 
-First, run the development server:
+## 로컬 실행
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- API: `http://localhost:4000` (환경에 따라 다를 수 있음)
+- 웹: `http://localhost:5173` — 개발 시 `/api`는 Vite 프록시로 API에 전달됩니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+자세한 환경 변수는 [`server/.env.example`](server/.env.example), [`frontend/.env.example`](frontend/.env.example) 를 참고하세요.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 인터넷에 올리기 (Supabase DB + 호스팅)
 
-## Learn More
+**외부에서 접속** 가능하게 하려면 Supabase PostgreSQL에 DB를 두고, API·프론트를 각각 호스팅하면 됩니다. 초보자용 단계별 안내는 아래 문서를 보세요.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+→ **[docs/DEPLOY_SUPABASE.md](docs/DEPLOY_SUPABASE.md)**
