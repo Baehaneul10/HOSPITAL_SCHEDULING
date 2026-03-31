@@ -9,17 +9,23 @@ import { appointmentsRouter } from "./routes/appointments.js";
 const app = express();
 const port = Number(process.env.PORT ?? 4000);
 
+const corsOrigins = process.env.CORS_ORIGIN?.trim()
+  ? process.env.CORS_ORIGIN.split(",").map((s) => s.trim())
+  : true;
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN?.split(",").map((s) => s.trim()) ?? true,
+    origin: corsOrigins,
     credentials: true,
   })
 );
 app.use(express.json({ limit: "2mb" }));
 
-app.get("/health", (_req, res) => {
+const health = (_req: Request, res: Response) => {
   res.json({ ok: true });
-});
+};
+app.get("/health", health);
+app.get("/healthz", health);
 
 app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
@@ -32,6 +38,6 @@ app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   res.status(500).json({ error: message });
 });
 
-app.listen(port, () => {
-  console.log(`API listening on http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`API listening on 0.0.0.0:${port}`);
 });
