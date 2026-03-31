@@ -1,3 +1,10 @@
+process.on("uncaughtException", (err) => {
+  console.error("[fatal] uncaughtException", err);
+});
+process.on("unhandledRejection", (reason) => {
+  console.error("[fatal] unhandledRejection", reason);
+});
+
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import dotenv from "dotenv";
@@ -12,4 +19,10 @@ if (!process.env.DATABASE_URL?.trim()) {
 
 if (!process.env.JWT_SECRET?.trim()) {
   process.env.JWT_SECRET = "dev-only-change-in-production";
+}
+
+if (process.env.RENDER === "true") {
+  console.log(
+    `[boot] Render runtime PORT=${process.env.PORT ?? "(unset)"} cwd=${process.cwd()} hasDbUrl=${Boolean(process.env.DATABASE_URL?.trim())}`
+  );
 }
