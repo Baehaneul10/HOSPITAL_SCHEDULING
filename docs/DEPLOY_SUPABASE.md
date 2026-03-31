@@ -194,11 +194,13 @@ npx tsx prisma/seed.ts
 1. Render 대시보드 → **New** → **Web Service**.
 2. GitHub 저장소 연결 후 선택.
 3. **Root Directory** 에 `server` 입력 (모노레포이므로 API만 이 폴더에서 빌드).
-4. **Build Command** 예시:
+4. **Build Command** 예시 (`DIRECT_URL` 을 안 넣었을 때도 P1012 가 나지 않도록 `build:render` 권장):
 
    ```bash
-   npm install && npx prisma generate && npx prisma migrate deploy && npm run build
+   npm install && npm run build:render
    ```
+
+   (구식: `npm install && npx prisma generate && npx prisma migrate deploy && npm run build` — 이때는 Render에 **`DIRECT_URL` 필수**.)
 
 5. **Start Command** 예시:
 
